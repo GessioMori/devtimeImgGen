@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "lib": [],
+    "lib": ["esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "sourceMap": true,
