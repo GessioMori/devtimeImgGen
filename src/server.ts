@@ -23,6 +23,7 @@ app.get('/:userId', async (req, res) => {
       .header({
         'Content-Type': 'image/png'
       })
+      .set('Cache-Control', 'no-cache')
       .send(cachedImage);
   } else {
     try {
@@ -35,6 +36,7 @@ app.get('/:userId', async (req, res) => {
         .header({
           'Content-Type': 'image/png'
         })
+        .set('Cache-Control', 'no-cache')
         .send(screenshot);
     } catch (e) {
       console.error(e);
