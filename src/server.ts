@@ -13,7 +13,7 @@ app.get('/:userId', async (req, res) => {
   const { userId } = req.params;
 
   if (!userId) {
-    return res.status(400).send('Unable to create an image.');
+    return res.status(400).send('Unable to find user.');
   }
 
   const cachedImage = cache.get(userId);
