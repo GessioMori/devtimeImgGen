@@ -5,8 +5,13 @@ import { getScreenshot } from './getScreenshot';
 
 const app = express();
 
+app.get('/', (_req, res) => {
+  return res.status(200).json({ message: 'DevTime card generator' });
+});
+
 app.get('/:userId', async (req, res) => {
   const { userId } = req.params;
+
   if (!userId) {
     return res.status(400).send('Unable to create an image.');
   }
@@ -31,7 +36,8 @@ app.get('/:userId', async (req, res) => {
           'Content-Type': 'image/png'
         })
         .send(screenshot);
-    } catch {
+    } catch (e) {
+      console.error(e);
       return res.status(400).send('Unable to create an image.');
     }
   }
