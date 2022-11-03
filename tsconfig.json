@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "ES5",
     "lib": ["esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -8,9 +8,8 @@
     "outDir": "dist",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "noEmit": false,
     "esModuleInterop": true,
-    "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -30,6 +29,6 @@
     "noUncheckedIndexedAccess": false,
     "useDefineForClassFields": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }
