@@ -1,4 +1,5 @@
 import express from 'express';
+import cache from 'memory-cache';
 import { createUserCard } from './createUserCard';
 import { getScreenshot } from './getScreenshot';
 
@@ -9,17 +10,30 @@ app.get('/:userId', async (req, res) => {
   if (!userId) {
     return res.status(400).send('Unable to create an image.');
   }
-  try {
-    const html = await createUserCard(userId);
-    const screenshot = await getScreenshot(html);
 
+  const cachedImage = cache.get(userId);
+
+  if (cachedImage) {
     return res
       .header({
         'Content-Type': 'image/png'
       })
-      .send(screenshot);
-  } catch {
-    return res.status(400).send('Unable to create an image.');
+      .send(cachedImage);
+  } else {
+    try {
+      const html = await createUserCard(userId);
+      const screenshot = await getScreenshot(html);
+
+      cache.put(userId, screenshot, 8 * 60 * 60);
+
+      return res
+        .header({
+          'Content-Type': 'image/png'
+        })
+        .send(screenshot);
+    } catch {
+      return res.status(400).send('Unable to create an image.');
+    }
   }
 });
 
