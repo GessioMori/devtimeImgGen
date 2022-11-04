@@ -5,11 +5,11 @@ import { getScreenshot } from './getScreenshot';
 
 const app = express();
 
-app.get('/', (_req, res) => {
+app.get('/devtimeusercard', (_req, res) => {
   return res.status(200).json({ message: 'DevTime card generator' });
 });
 
-app.get('/user/:userId', async (req, res) => {
+app.get('/devtimeusercard/user/:userId', async (req, res) => {
   const { userId } = req.params;
 
   if (!userId) {
@@ -23,7 +23,7 @@ app.get('/user/:userId', async (req, res) => {
     return res
       .header({
         'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=86400'
+        'Cache-Control': 'public, max-age=28800'
       })
       .send(cachedImage);
   } else {
@@ -32,12 +32,12 @@ app.get('/user/:userId', async (req, res) => {
       const html = await createUserCard(userId);
       const screenshot = await getScreenshot(html);
 
-      cache.put(userId, screenshot, 24 * 60 * 60);
+      cache.put(userId, screenshot, 8 * 60 * 60);
 
       return res
         .header({
           'Content-Type': 'image/png',
-          'Cache-Control': 'public, max-age=86400'
+          'Cache-Control': 'public, max-age=28800'
         })
         .send(screenshot);
     } catch (e) {
