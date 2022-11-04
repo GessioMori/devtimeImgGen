@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
   workflow_dispatch:
 
@@ -21,8 +21,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          source: "."
-          target: "~/devtimeusercard"
+          source: '.'
+          target: '~/devtimeusercard'
 
       - name: Test API command
         uses: appleboy/ssh-action@master
@@ -36,4 +36,4 @@ jobs:
             yarn
             yarn build
             npx prisma generate
-            pm2 devtimeusercard
+            pm2 restart devtimeusercard
