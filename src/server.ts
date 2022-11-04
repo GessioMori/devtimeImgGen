@@ -9,7 +9,7 @@ app.get('/', (_req, res) => {
   return res.status(200).json({ message: 'DevTime card generator' });
 });
 
-app.get('/:userId', async (req, res) => {
+app.get('/user/:userId', async (req, res) => {
   const { userId } = req.params;
 
   if (!userId) {
@@ -19,24 +19,26 @@ app.get('/:userId', async (req, res) => {
   const cachedImage = cache.get(userId);
 
   if (cachedImage) {
+    console.log('Getting cached data');
     return res
       .header({
-        'Content-Type': 'image/png'
+        'Content-Type': 'image/png',
+        'Cache-Control': 'public, max-age=86400'
       })
-      .set('Cache-Control', 'no-cache')
       .send(cachedImage);
   } else {
     try {
+      console.log('Getting db data');
       const html = await createUserCard(userId);
       const screenshot = await getScreenshot(html);
 
-      cache.put(userId, screenshot, 8 * 60 * 60);
+      cache.put(userId, screenshot, 24 * 60 * 60);
 
       return res
         .header({
-          'Content-Type': 'image/png'
+          'Content-Type': 'image/png',
+          'Cache-Control': 'public, max-age=86400'
         })
-        .set('Cache-Control', 'no-cache')
         .send(screenshot);
     } catch (e) {
       console.error(e);

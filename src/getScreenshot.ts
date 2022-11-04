@@ -8,7 +8,7 @@ async function getPage(): Promise<Page> {
   }
 
   const browser = await puppeteer.launch({
-    args: []
+    args: ['--force-color-profile=srgb']
   });
 
   page = await browser.newPage();
@@ -27,8 +27,7 @@ export async function getScreenshot(html: string): Promise<Buffer | string> {
 
   if (card) {
     const file = await card.screenshot({
-      type: 'png',
-      omitBackground: true
+      type: 'png'
     });
     return file;
   }
