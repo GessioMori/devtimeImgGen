@@ -8,7 +8,7 @@ async function getPage(): Promise<Page> {
   }
 
   const browser = await puppeteer.launch({
-    args: ['--force-color-profile=srgb']
+    args: ['--force-color-profile=srgb|generic-rgb|color-spin-gamma24']
   });
 
   page = await browser.newPage();
@@ -23,6 +23,7 @@ export async function getScreenshot(html: string): Promise<Buffer | string> {
   await page.setContent(html);
   await page.evaluateHandle('document.fonts.ready');
   await page.waitForSelector('#card');
+
   const card = await page.$('#card');
 
   if (card) {

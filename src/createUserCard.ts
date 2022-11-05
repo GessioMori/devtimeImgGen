@@ -11,9 +11,15 @@ export const createUserCard = async (userId: string) => {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap" rel="stylesheet">
 </head>
+<style>
+  html {
+    -webkit-print-color-adjust: exact !important;
+    -webkit-filter: opacity(1) !important;
+  }
+</style>
 <body style="font-family: Roboto, sans-serif; color: #70a5fd; margin: 0; background: transparent">
   <div id='card'
-    style="display: flex; flex-direction: column; background-color: #0d1117; width: 460px; height: 180px; align-items: center; justify-content: center;">
+    style="display: flex; flex-direction: column; background-color: rgb(13, 17,23); width: 460px; height: 180px; align-items: center; justify-content: center;">
     <div style="display: flex; align-items: center;">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-tabler" width="44" height="44"
         viewBox="0 0 24 24" stroke-width="3" stroke="#3164cc" fill="none" stroke-linecap="round"
@@ -113,7 +119,7 @@ async function getUserInfo(userId: string) {
     ? Math.floor(workingTimeInSeconds / 3600)
       ? `${Math.floor(workingTimeInSeconds / 3600)} h`
       : Math.floor(workingTimeInSeconds / 60)
-      ? `${Math.floor(workingTimeInSeconds / 60)}`
+      ? `${Math.floor(workingTimeInSeconds / 60)} min`
       : '0 min'
     : '0 min';
 
