@@ -1,9 +1,12 @@
+import cors from 'cors';
 import express from 'express';
 import cache from 'memory-cache';
 import { createUserCard } from './createUserCard';
 import { getScreenshot } from './getScreenshot';
 
 const app = express();
+
+app.use(cors());
 
 app.get('/', (_req, res) => {
   return res.status(200).json({ message: 'DevTime card generator' });
@@ -22,7 +25,7 @@ app.get('/card/:userId', async (req, res) => {
     return res
       .header({
         'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=3600'
+        'Cache-Control': 'no-store'
       })
       .send(cachedImage);
   } else {
@@ -35,7 +38,7 @@ app.get('/card/:userId', async (req, res) => {
       return res
         .header({
           'Content-Type': 'image/png',
-          'Cache-Control': 'public, max-age=3600'
+          'Cache-Control': 'no-store'
         })
         .send(screenshot);
     } catch (e) {
